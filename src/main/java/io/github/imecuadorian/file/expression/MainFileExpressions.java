@@ -6,7 +6,6 @@ import java.io.*;
 import java.util.*;
 
 import static io.github.imecuadorian.file.expression.utils.RegEx.*;
-import static io.github.imecuadorian.library.Files.validateByRegularExpression;
 
 public class MainFileExpressions {
 
@@ -23,7 +22,7 @@ public class MainFileExpressions {
             2. Read the file (information.txt)
             3. Leave the application
             
-            Option: 
+            Option:
             """;
 
     private static final String SUBMENU = """
@@ -34,24 +33,12 @@ public class MainFileExpressions {
             4. Email
             5. Back to main menu
             
-            Option: 
+            Option:
             """;
 
     public static void main(String[] args) {
-        String validWEB = validateByRegularExpression("https://www.techworld.com/smartphones", WEB_URL) ?
-                "Valid WEB URL" : "Invalid WEB URL";
-        System.out.println(validWEB);
-        String validCC = validateByRegularExpression("5432 1098 7654 3210", CREDIT_CARD) ?
-                "Valid Credit Card" : "Invalid Credit Card";
-        System.out.println(validCC);
-        String validCC2 = validateByRegularExpression("TechWorld", CAMEL_CASE) ?
-                "Valid Camel Case" : "Invalid Camel Case";
-        System.out.println(validCC2);
-        String validEmail = validateByRegularExpression("support@techworld.com", EMAIL) ?
-                "Valid Email" : "Invalid Email";
-        System.out.println(validEmail);
-
         showMenu();
+        System.out.println("Thank you for using the application!");
     }
 
     private static void showMenu() {
@@ -96,10 +83,22 @@ public class MainFileExpressions {
             System.out.println(SUBMENU);
             int option = SCANNER.nextInt();
             switch (option) {
-                case 1 -> FILES.findWords(fileContent, WEB_URL).forEach(System.out::println);
-                case 2 -> FILES.findWords(fileContent, CREDIT_CARD).forEach(System.out::println);
-                case 3 -> FILES.findWords(fileContent, CAMEL_CASE).forEach(System.out::println);
-                case 4 -> FILES.findWords(fileContent, EMAIL).forEach(System.out::println);
+                case 1 -> {
+                    System.out.println("Web URLs found:");
+                    FILES.getWordsByRegularExpression(fileContent, WEB_URL).forEach(System.out::println);
+                }
+                case 2 -> {
+                    System.out.println("Credit Card Numbers found:");
+                    FILES.getWordsByRegularExpression(fileContent, CREDIT_CARD).forEach(System.out::println);
+                }
+                case 3 -> {
+                    System.out.println("Words in Camel Case found:");
+                    FILES.getWordsByRegularExpression(fileContent, CAMEL_CASE).forEach(System.out::println);
+                }
+                case 4 -> {
+                    System.out.println("Email addresses found:");
+                    FILES.getWordsByRegularExpression(fileContent, EMAIL).forEach(System.out::println);
+                }
                 case 5 -> {
                     System.out.println("Returning to main menu...");
                     isRunning = false;
